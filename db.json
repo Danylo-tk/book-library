@@ -1,0 +1,25 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "category": "Engineering, Programming",
+      "isbn": "9780132350884"
+    },
+    {
+      "id": 2,
+      "title": "The C Programming Language",
+      "author": "Brian W. Kernighan",
+      "category": "Computer Science, Programming",
+      "isbn": "9780131103627"
+    },
+    {
+      "id": 3,
+      "title": "The Algorithm Design Manual",
+      "author": "Steven S. Skiena",
+      "category": "Computer Science, Algorithms",
+      "isbn": "9780387948607"
+    }
+  ]
+}
