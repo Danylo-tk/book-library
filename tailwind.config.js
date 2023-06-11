@@ -11,6 +11,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-fivo)"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
