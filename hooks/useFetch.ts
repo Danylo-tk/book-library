@@ -34,7 +34,7 @@ const useFetch = <T>(url: string): FetchState<T> => {
     };
 
     fetchData();
-  }, [url]);
+  }, [data]);
 
   return { data, error, isLoading };
 };
