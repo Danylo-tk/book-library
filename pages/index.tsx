@@ -1,6 +1,7 @@
-import useFetch from "@/hooks/useFetch";
 import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { handleActivation, handleDelete } from "@/util/apiHandlers";
 
 interface BookParams {
   id: number;
@@ -14,30 +15,21 @@ interface BookParams {
 }
 
 const BookItem = ({ bookData }: { bookData: BookParams }) => {
-  const handleActivation = (bookId: number, newStatus: boolean) => {
-    const url = `http://localhost:3000/books/${bookId}`;
-    const options = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+  const client = useQueryClient();
+  const activationMutation = useMutation(
+    (newStatus: boolean) => handleActivation(bookData.id, newStatus),
+    {
+      onSuccess: () => {
+        client.invalidateQueries(["books"]);
       },
-      body: JSON.stringify({ isActive: newStatus ? false : true }),
-    };
+    }
+  );
 
-    fetch(url, options);
-  };
-
-  const handleDelete = (bookId: number) => {
-    const url = `http://localhost:3000/books/${bookId}`;
-    const options = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch(url, options);
-  };
+  const deleteMutation = useMutation(() => handleDelete(bookData.id), {
+    onSuccess: () => {
+      client.invalidateQueries(["books"]);
+    },
+  });
 
   return (
     <div className="relative h-60 px-14 py-10 flex flex-col justify-between border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
@@ -72,14 +64,14 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
 
         {!bookData.isActive ? (
           <div className="flex gap-5 relative">
-            <Button onClick={() => handleActivation(bookData.id, false)}>
+            <Button onClick={() => activationMutation.mutate(true)}>
               Activate
             </Button>
-            <Button onClick={() => handleDelete(bookData.id)}>Delete</Button>
+            <Button onClick={() => deleteMutation.mutate()}>Delete</Button>
           </div>
         ) : (
           <div className="flex gap-5">
-            <Button onClick={() => handleActivation(bookData.id, true)}>
+            <Button onClick={() => activationMutation.mutate(false)}>
               Deactivate
             </Button>
             <Button>Edit</Button>
@@ -90,18 +82,19 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
   );
 };
 
+const getBooks = async () => {
+  const res = await fetch("http://localhost:3000/books");
+  return res.json();
+};
+
 export default function Home() {
-  const {
-    data: books,
-    error,
-    isLoading,
-  } = useFetch<BookParams[]>("http://localhost:3000/books");
+  const { data } = useQuery({ queryKey: ["books"], queryFn: getBooks });
 
   return (
     <main>
       <div></div>
       <div>
-        {books?.map((book) => (
+        {data?.map((book: BookParams) => (
           <BookItem bookData={book} key={book.id} />
         ))}
       </div>

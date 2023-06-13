@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 
@@ -18,10 +19,14 @@ const fivo = localFont({
   variable: "--font-fivo",
 });
 
+const queryClient = new QueryClient();
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${fivo.variable} font-sans`}>
-      <Component {...pageProps} />
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <main className={`${fivo.variable} font-sans`}>
+        <Component {...pageProps} />
+      </main>
+    </QueryClientProvider>
   );
 }
