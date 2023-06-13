@@ -1,3 +1,8 @@
+export const getBooks = async () => {
+  const res = await fetch("http://localhost:3000/books");
+  return res.json();
+};
+
 export const handleActivation = async (bookId: number, newStatus: boolean) => {
   const options = {
     method: "PATCH",

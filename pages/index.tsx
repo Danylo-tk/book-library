@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { handleActivation, handleDelete } from "@/util/apiHandlers";
+import { getBooks, handleActivation, handleDelete } from "@/util/apiHandlers";
 
 interface BookParams {
   id: number;
@@ -80,11 +80,6 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
       </div>
     </div>
   );
-};
-
-const getBooks = async () => {
-  const res = await fetch("http://localhost:3000/books");
-  return res.json();
 };
 
 export default function Home() {
