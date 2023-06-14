@@ -34,7 +34,7 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
   });
 
   return (
-    <div className="relative h-60 px-14 py-10 flex flex-col justify-between border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
+    <div className=" px-5 py-10 box-border relative flex flex-col justify-between border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
       {!bookData.isActive ? (
         <div className="absolute inset-0 h-full w-full frosted-glass "></div>
       ) : null}
@@ -52,14 +52,16 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
         </div>
       </div>
 
-      <div className="h-4"></div>
+      <div className="h-14"></div>
 
       <div className="relative">
         <p className="text-xl">{bookData.author}</p>
-        <h2 className="font-bold text-5xl">{bookData.title}</h2>
+        <h2 className="font-bold text-2xl sm:text-5xl">{bookData.title}</h2>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="h-4"></div>
+
+      <div className="flex items-center flex-col sm:flex-row justify-between">
         <p className="text-gray-400 text-xl">
           <span className="font-bold">ISBN:</span> {bookData.isbn}
         </p>
@@ -103,8 +105,8 @@ export default function Home() {
   );
 
   return (
-    <main>
-      <div className="flex gap-2 border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
+    <main className="flex flex-col items-center">
+      <div className="w-full max-w-[76rem] box-border p-5 flex items-center gap-2 border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
         <Button
           onClick={() => handleFilterChange("allFilter")}
           isBorderActive={activeFilter === "allFilter"}
@@ -123,11 +125,30 @@ export default function Home() {
         >
           Inactive
         </Button>
+        <p className="text-gray-600">
+          Showing{" "}
+          <span className="font-bold text-gray-950">
+            {filteredData?.length > 0 ? filteredData?.length : 0}
+          </span>{" "}
+          records out of{" "}
+          <span className="font-bold text-gray-950">
+            {data?.length > 0 ? data?.length : 0}
+          </span>
+          .
+        </p>
       </div>
-      <div>
-        {filteredData?.map((book: BookParams) => (
-          <BookItem bookData={book} key={book.id} />
-        ))}
+
+      <div className="w-full max-w-[76rem]">
+        {filteredData?.length > 0 ? (
+          filteredData?.map((book: BookParams) => (
+            <BookItem bookData={book} key={book.id} />
+          ))
+        ) : (
+          <div className="p-5 flex gap-10 items-center">
+            <h2 className="text-3xl">Nothing to show here...</h2>
+            <Button>Add more</Button>
+          </div>
+        )}
       </div>
     </main>
   );
