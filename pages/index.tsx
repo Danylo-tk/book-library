@@ -2,6 +2,7 @@ import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBooks, handleActivation, handleDelete } from "@/util/apiHandlers";
+import { useState } from "react";
 
 interface BookParams {
   id: number;
@@ -16,6 +17,7 @@ interface BookParams {
 
 const BookItem = ({ bookData }: { bookData: BookParams }) => {
   const client = useQueryClient();
+
   const activationMutation = useMutation(
     (newStatus: boolean) => handleActivation(bookData.id, newStatus),
     {
@@ -83,13 +85,47 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
 };
 
 export default function Home() {
+  const [activeFilter, setActiveFilter] = useState("allFilter");
   const { data } = useQuery({ queryKey: ["books"], queryFn: getBooks });
+
+  const handleFilterChange = (filterName: string) => {
+    setActiveFilter(filterName);
+  };
+
+  let filteredData = data?.filter(
+    (book: BookParams) =>
+      book.isActive ===
+      (activeFilter == "allFilter"
+        ? book.isActive
+        : activeFilter == "activeFilter"
+        ? true
+        : false)
+  );
 
   return (
     <main>
-      <div></div>
+      <div className="flex gap-2 border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
+        <Button
+          onClick={() => handleFilterChange("allFilter")}
+          isBorderActive={activeFilter === "allFilter"}
+        >
+          All
+        </Button>
+        <Button
+          onClick={() => handleFilterChange("activeFilter")}
+          isBorderActive={activeFilter === "activeFilter"}
+        >
+          Active
+        </Button>
+        <Button
+          onClick={() => handleFilterChange("inactiveFilter")}
+          isBorderActive={activeFilter === "inactiveFilter"}
+        >
+          Inactive
+        </Button>
+      </div>
       <div>
-        {data?.map((book: BookParams) => (
+        {filteredData?.map((book: BookParams) => (
           <BookItem bookData={book} key={book.id} />
         ))}
       </div>
