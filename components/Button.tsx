@@ -4,16 +4,25 @@ interface ButtonProps {
   children: ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   isBorderActive?: boolean;
+  type?: "button" | "submit";
+  disabled?: boolean;
 }
 
-export const Button = ({ children, onClick, isBorderActive }: ButtonProps) => {
+export const Button = ({
+  children,
+  onClick,
+  isBorderActive,
+  type = "button",
+  disabled,
+}: ButtonProps) => {
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
-      className={`py-2 px-4 text-xl font-fivo text-gray-600 bg-white rounded-sm border border-solid ${
+      disabled={disabled}
+      className={`font-fivo rounded-sm border border-solid bg-white px-4 py-2 text-xl text-gray-600 ${
         isBorderActive ? "border-acidGreen" : "border-gray-600"
-      } hover:text-gray-950 hover:border-acidGreen active:text-acidGreen`}
+      } hover:border-acidGreen hover:text-gray-950 active:text-acidGreen`}
     >
       {children}
     </button>

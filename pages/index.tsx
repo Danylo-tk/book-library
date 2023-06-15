@@ -34,9 +34,9 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
   });
 
   return (
-    <div className=" px-5 py-10 box-border relative flex flex-col justify-between border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
+    <div className=" relative box-border flex flex-col justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black px-5 py-10">
       {!bookData.isActive ? (
-        <div className="absolute inset-0 h-full w-full frosted-glass "></div>
+        <div className="frosted-glass absolute inset-0 h-full w-full "></div>
       ) : null}
       <div>
         <div className="flex gap-14">
@@ -45,10 +45,8 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
             Last edit: {bookData.modifiedAt}
           </span>
         </div>
-        <div className="flex gap-2 mt-2">
-          <Chip label="Computer Science" />
-          <Chip label="Algorithms" />
-          <Chip label="Programming" />
+        <div className="mt-2 flex gap-2">
+          <Chip label={bookData.category} />
         </div>
       </div>
 
@@ -56,18 +54,18 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
 
       <div className="relative">
         <p className="text-xl">{bookData.author}</p>
-        <h2 className="font-bold text-2xl sm:text-5xl">{bookData.title}</h2>
+        <h2 className="text-2xl font-bold sm:text-5xl">{bookData.title}</h2>
       </div>
 
       <div className="h-4"></div>
 
-      <div className="flex items-center flex-col sm:flex-row justify-between">
-        <p className="text-gray-400 text-xl">
+      <div className="flex flex-col items-center justify-between sm:flex-row">
+        <p className="text-xl text-gray-400">
           <span className="font-bold">ISBN:</span> {bookData.isbn}
         </p>
 
         {!bookData.isActive ? (
-          <div className="flex gap-5 relative">
+          <div className="relative flex gap-5">
             <Button onClick={() => activationMutation.mutate(true)}>
               Activate
             </Button>
@@ -106,7 +104,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="w-full max-w-[76rem] box-border p-5 flex items-center gap-2 border-t-0 border-l-0 border-r-0 border-b border-solid border-black">
+      <div className="box-border flex w-full max-w-[76rem] items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5">
         <Button
           onClick={() => handleFilterChange("allFilter")}
           isBorderActive={activeFilter === "allFilter"}
@@ -144,7 +142,7 @@ export default function Home() {
             <BookItem bookData={book} key={book.id} />
           ))
         ) : (
-          <div className="p-5 flex gap-10 items-center">
+          <div className="flex items-center gap-10 p-5">
             <h2 className="text-3xl">Nothing to show here...</h2>
             <Button>Add more</Button>
           </div>
