@@ -14,7 +14,7 @@ const CreateBookView = ({ form, onSubmit }: ViewProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full max-w-xl flex-col gap-4"
+      className="flex w-full flex-col gap-4"
     >
       <div className="flex flex-col">
         <label className="text-md text-gray-600">Title</label>

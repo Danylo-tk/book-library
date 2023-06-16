@@ -2,21 +2,21 @@ import CreateBookApi from "@/features/CreateBook/CreateBookApi";
 
 export default function Edit() {
   return (
-    <div className="w-full">
-      <h1 className="flex h-28 items-center justify-center border border-b-0 border-solid border-black text-[12vw] text-acidGreen lg:h-48">
+    <main className="flex h-full flex-col border border-solid border-black">
+      <h1 className="max-w-proze flex justify-center border-l-0 border-r-0 border-t-0 border-solid border-black py-10 text-[10vw] text-acidGreen">
         Add a new book
       </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="flex items-center border border-b-0 border-solid border-black lg:border-b lg:border-r-0">
-          <p className="p-5 text-3xl lg:p-10">
-            Start building your reading collection: Expand your personal library
-            by providing details of a new book!📚
+      <div className="grid flex-1 grid-cols-1 border-blue-500 lg:grid-cols-2">
+        <div className="flex items-center justify-center border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5 lg:border-b-0 lg:border-r lg:p-10">
+          <p className="text-xl lg:text-3xl">
+            Start building personal reading collection: Expand your library by
+            providing details of a new book!📚
           </p>
         </div>
-        <div className="flex justify-center border border-solid border-black p-5 lg:py-24">
+        <div className="flex items-center p-5 lg:p-10">
           <CreateBookApi />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
