@@ -34,9 +34,9 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
   });
 
   return (
-    <div className=" relative box-border flex flex-col justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black px-5 py-10">
+    <div className="relative box-border flex flex-col justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black px-5 py-10">
       {!bookData.isActive ? (
-        <div className="frosted-glass absolute inset-0 h-full w-full "></div>
+        <div className="frosted-glass absolute inset-0 h-full w-full"></div>
       ) : null}
       <div>
         <div className="flex gap-14">
@@ -104,7 +104,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="box-border flex w-full max-w-[76rem] items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5">
+      <div className="box-border flex w-full items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5">
         <Button
           onClick={() => handleFilterChange("allFilter")}
           isBorderActive={activeFilter === "allFilter"}
@@ -136,7 +136,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="w-full max-w-[76rem]">
+      <div className="w-full">
         {filteredData?.length > 0 ? (
           filteredData?.map((book: BookParams) => (
             <BookItem bookData={book} key={book.id} />
