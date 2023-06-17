@@ -34,12 +34,12 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
   });
 
   return (
-    <div className="relative box-border flex flex-col justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black px-5 py-10">
+    <div className="relative box-border flex flex-col justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black px-5 py-4 sm:py-10">
       {!bookData.isActive ? (
         <div className="frosted-glass absolute inset-0 h-full w-full"></div>
       ) : null}
       <div>
-        <div className="flex gap-14">
+        <div className="flex flex-col sm:flex-row sm:gap-14">
           <span className="text-xs text-gray-400">{bookData.createdAt}</span>
           <span className="text-xs text-gray-400">
             Last edit: {bookData.modifiedAt}
@@ -50,11 +50,11 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
         </div>
       </div>
 
-      <div className="h-14"></div>
+      <div className="h-4 sm:h-14"></div>
 
       <div className="relative">
-        <p className="text-xl">{bookData.author}</p>
-        <h2 className="text-2xl font-bold sm:text-5xl">{bookData.title}</h2>
+        <p className="text-md sm:text-xl">{bookData.author}</p>
+        <h2 className="text-3xl font-bold sm:text-5xl">{bookData.title}</h2>
       </div>
 
       <div className="h-4"></div>
@@ -104,25 +104,32 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="box-border flex w-full items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5">
-        <Button
-          onClick={() => handleFilterChange("allFilter")}
-          isBorderActive={activeFilter === "allFilter"}
-        >
-          All
-        </Button>
-        <Button
-          onClick={() => handleFilterChange("activeFilter")}
-          isBorderActive={activeFilter === "activeFilter"}
-        >
-          Active
-        </Button>
-        <Button
-          onClick={() => handleFilterChange("inactiveFilter")}
-          isBorderActive={activeFilter === "inactiveFilter"}
-        >
-          Inactive
-        </Button>
+      <div className="box-border flex w-full py-14">
+        <button className="cursor-pointer border border-solid border-black bg-white p-2 text-9xl  hover:border-acidGreen hover:text-black active:text-acidGreen">
+          +Add a book
+        </button>
+      </div>
+      <div className="box-border flex w-full flex-col items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5 md:flex-row">
+        <div className="flex gap-2">
+          <Button
+            onClick={() => handleFilterChange("allFilter")}
+            isBorderActive={activeFilter === "allFilter"}
+          >
+            All
+          </Button>
+          <Button
+            onClick={() => handleFilterChange("activeFilter")}
+            isBorderActive={activeFilter === "activeFilter"}
+          >
+            Active
+          </Button>
+          <Button
+            onClick={() => handleFilterChange("inactiveFilter")}
+            isBorderActive={activeFilter === "inactiveFilter"}
+          >
+            Inactive
+          </Button>
+        </div>
         <p className="text-gray-600">
           Showing{" "}
           <span className="font-bold text-gray-950">
