@@ -3,6 +3,7 @@ import { Chip } from "@/components/Chip";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getBooks, handleActivation, handleDelete } from "@/util/apiHandlers";
 import { useState } from "react";
+import Link from "next/link";
 
 interface BookParams {
   id: number;
@@ -105,9 +106,11 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <div className="box-border flex w-full py-14">
-        <button className="cursor-pointer border border-solid border-black bg-white p-2 text-9xl  hover:border-acidGreen hover:text-black active:text-acidGreen">
-          +Add a book
-        </button>
+        <Link href={"/add"}>
+          <button className="cursor-pointer border border-solid border-black bg-white p-2 text-9xl  hover:border-acidGreen hover:text-black active:text-acidGreen">
+            +Add a book
+          </button>
+        </Link>
       </div>
       <div className="box-border flex w-full flex-col items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5 md:flex-row">
         <div className="flex gap-2">

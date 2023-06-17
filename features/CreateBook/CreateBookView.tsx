@@ -1,6 +1,7 @@
 import { UseFormReturn } from "react-hook-form";
 import { CreateBookFormModel } from "./CreateBookLogic";
 import { Button } from "@/components/Button";
+import Link from "next/link";
 
 interface ViewProps {
   form: UseFormReturn<CreateBookFormModel>;
@@ -57,10 +58,13 @@ const CreateBookView = ({ form, onSubmit }: ViewProps) => {
         <p className="h-5 text-sm text-red-900">{errors?.isbn?.message}</p>
       </div>
 
-      <div>
+      <div className="flex flex-row gap-2">
         <Button type="submit" disabled={isSubmitting}>
           Create
         </Button>
+        <Link href={"/"}>
+          <Button>Home</Button>
+        </Link>
       </div>
     </form>
   );
