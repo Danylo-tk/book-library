@@ -1,8 +1,24 @@
 import dayjs from "dayjs";
 import CreateBookLogic, { CreateBookFormModel } from "./CreateBookLogic";
 import { v4 as uuidv4 } from "uuid";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingPage } from "@/components/Loader";
+import { getBookById } from "@/util/apiHandlers";
 
-const CreateBookApi = () => {
+interface CreateBookApiProps {
+  editBookId?: string[] | undefined | string;
+}
+
+const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
+  const { data: editBookData, isLoading: isLoadingEditBookData } = useQuery(
+    ["createBookData"],
+    () => getBookById(editBookId),
+    {
+      enabled: !!editBookId,
+      cacheTime: 0,
+    }
+  );
+
   const handleSubmit = async (data: CreateBookFormModel) => {
     const submitData = {
       id: uuidv4(),
@@ -24,11 +40,14 @@ const CreateBookApi = () => {
     });
   };
 
+  // returning early if initial form data isn't loaded yet
+  if (isLoadingEditBookData && editBookId) return <LoadingPage />;
+
   const defaultValues = {
-    title: "",
-    author: "",
-    category: "",
-    isbn: "",
+    title: editBookData?.title ?? "",
+    author: editBookData?.author ?? "",
+    category: editBookData?.category ?? "",
+    isbn: editBookData?.isbn ?? "",
   };
 
   return (

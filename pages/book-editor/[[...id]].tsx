@@ -18,7 +18,7 @@ export default function Edit() {
           </p>
         </div>
         <div className="flex items-center p-5 lg:p-10">
-          <CreateBookApi />
+          <CreateBookApi editBookId={bookId.id} />
         </div>
       </div>
     </main>
