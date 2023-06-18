@@ -1,6 +1,10 @@
 import CreateBookApi from "@/features/CreateBook/CreateBookApi";
+import { useRouter } from "next/router";
 
 export default function Edit() {
+  const router = useRouter();
+  const bookId = router.query;
+
   return (
     <main className="flex h-full flex-col border border-solid border-black">
       <h1 className="max-w-proze flex justify-center border-l-0 border-r-0 border-t-0 border-solid border-black py-10 text-[10vw] text-acidGreen">
