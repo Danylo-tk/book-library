@@ -6,7 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 interface BookParams {
-  id: number;
+  id: string;
   title: string;
   author: string;
   category: string;
@@ -77,7 +77,9 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
             <Button onClick={() => activationMutation.mutate(false)}>
               Deactivate
             </Button>
-            <Button>Edit</Button>
+            <Link href={`/book-editor/${bookData.id}`}>
+              <Button>Edit</Button>
+            </Link>
           </div>
         )}
       </div>
@@ -106,7 +108,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center">
       <div className="box-border flex w-full py-14">
-        <Link href={"/add"}>
+        <Link href={"/book-editor"}>
           <button className="cursor-pointer border border-solid border-black bg-white p-2 text-9xl  hover:border-acidGreen hover:text-black active:text-acidGreen">
             +Add a book
           </button>

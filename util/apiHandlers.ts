@@ -3,7 +3,7 @@ export const getBooks = async () => {
   return res.json();
 };
 
-export const handleActivation = async (bookId: number, newStatus: boolean) => {
+export const handleActivation = async (bookId: string, newStatus: boolean) => {
   const options = {
     method: "PATCH",
     headers: {
@@ -15,7 +15,7 @@ export const handleActivation = async (bookId: number, newStatus: boolean) => {
   fetch(`http://localhost:3000/books/${bookId}`, options);
 };
 
-export const handleDelete = async (bookId: number) => {
+export const handleDelete = async (bookId: string) => {
   const options = {
     method: "DELETE",
     headers: {
