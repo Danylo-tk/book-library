@@ -33,7 +33,11 @@ const CreateBookLogic = ({ defaultValues, onSubmit }: LogicProps) => {
 
   const handleSubmit = async (data: CreateBookFormModel) => {
     await onSubmit(data)
-      .then(() => form.reset())
+      .then(() => {
+        Object.values(defaultValues).some((value) => value === "")
+          ? form.reset()
+          : null;
+      })
       .catch((err) => console.error(err));
   };
 

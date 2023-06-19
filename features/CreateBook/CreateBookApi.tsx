@@ -21,7 +21,7 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
 
   const handleSubmit = async (data: CreateBookFormModel) => {
     const submitData = {
-      id: uuidv4(),
+      id: editBookId ? editBookId : uuidv4(),
       title: data.title,
       author: data.author,
       category: data.category,
@@ -31,13 +31,16 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
       modifiedAt: dayjs().format("D MMMM YYYY · h:mmA"),
     };
 
-    return fetch(`http://localhost:3000/books`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(submitData),
-    });
+    return fetch(
+      `http://localhost:3000/books${editBookId ? `/${editBookId}` : ""}`,
+      {
+        method: editBookId ? "PATCH" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submitData),
+      }
+    );
   };
 
   // returning early if initial form data isn't loaded yet
