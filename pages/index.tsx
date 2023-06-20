@@ -107,10 +107,10 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="box-border flex w-full py-14">
+      <div className="box-border flex w-full justify-center py-4 md:justify-start">
         <Link href={"/book-editor"}>
-          <button className="cursor-pointer border border-solid border-black bg-white p-2 text-9xl  hover:border-acidGreen hover:text-black active:text-acidGreen">
-            +Add a book
+          <button className="cursor-pointer border-none bg-white p-2 text-2xl hover:border-acidGreen hover:text-black  active:text-acidGreen sm:p-5 sm:text-5xl">
+            Add a New Book
           </button>
         </Link>
       </div>
@@ -156,7 +156,9 @@ export default function Home() {
         ) : (
           <div className="flex items-center gap-10 p-5">
             <h2 className="text-3xl">Nothing to show here...</h2>
-            <Button>Add more</Button>
+            <Link href={"/book-editor"}>
+              <Button>Add more</Button>
+            </Link>
           </div>
         )}
       </div>
