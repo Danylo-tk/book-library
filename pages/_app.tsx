@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
 const fivo = localFont({
   src: [
@@ -27,6 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <main className={`${fivo.variable} font-sans`}>
         <Layout>
+          <Toaster position="bottom-center" />
           <Component {...pageProps} />
         </Layout>
       </main>

@@ -2,6 +2,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CreateBookView from "./CreateBookView";
+import { toast } from "react-hot-toast";
 
 export interface CreateBookFormModel {
   title: string;
@@ -35,8 +36,11 @@ const CreateBookLogic = ({ defaultValues, onSubmit }: LogicProps) => {
     await onSubmit(data)
       .then(() => {
         Object.values(defaultValues).some((value) => value === "")
-          ? form.reset()
-          : null;
+          ? (() => {
+              form.reset();
+              toast.success(`Created ${data.title}!`);
+            })()
+          : toast.success(`Edited ${data.title}!`);
       })
       .catch((err) => console.error(err));
   };
