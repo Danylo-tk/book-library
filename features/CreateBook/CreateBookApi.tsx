@@ -27,7 +27,9 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
       category: data.category,
       isbn: data.isbn,
       isActive: true,
-      createdAt: dayjs().format("D MMMM YYYY · h:mmA"),
+      createdAt: editBookId
+        ? data.createdAt
+        : dayjs().format("D MMMM YYYY · h:mmA"),
       modifiedAt: dayjs().format("D MMMM YYYY · h:mmA"),
     };
 

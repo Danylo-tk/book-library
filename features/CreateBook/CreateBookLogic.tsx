@@ -9,6 +9,7 @@ export interface CreateBookFormModel {
   author: string;
   category: string;
   isbn: string;
+  createdAt?: string;
 }
 
 const CreateBookFormSchema = z
