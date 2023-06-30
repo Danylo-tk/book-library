@@ -32,9 +32,12 @@ const useFetch = <T>(url: string): FetchState<T> => {
         setIsLoading(false);
       }
     };
+    const refetch = () => {
+      fetchData();
+    };
 
     fetchData();
-  }, [data]);
+  }, [url]);
 
   return { data, error, isLoading };
 };

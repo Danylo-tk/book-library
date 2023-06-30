@@ -60,11 +60,8 @@ const CreateBookView = ({ form, onSubmit }: ViewProps) => {
 
       <div className="flex flex-row gap-2">
         <Button type="submit" disabled={isSubmitting}>
-          Create
+          Submit
         </Button>
-        <Link href={"/"}>
-          <Button>Home</Button>
-        </Link>
       </div>
     </form>
   );

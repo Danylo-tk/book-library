@@ -1,25 +1,114 @@
 {
   "books": [
     {
-      "id": 1,
-      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "id": "e5a6bec0-083b-47b6-911a-35ac82b95c17",
+      "title": "The Pragmatic Programmer",
+      "author": "Andrew Hunt, David Thomas",
+      "category": "Software Development",
+      "isbn": "978-0201616224",
+      "isActive": false,
+      "createdAt": "19 June 2023 · 11:41PM",
+      "modifiedAt": "19 June 2023 · 11:41PM"
+    },
+    {
+      "id": "2e6765ab-5fbf-4275-9a7f-e8199bc38c28",
+      "title": "Clean Code",
       "author": "Robert C. Martin",
-      "category": "Engineering, Programming",
-      "isbn": "9780132350884"
+      "category": "Software Development",
+      "isbn": "978-0132350884",
+      "isActive": true,
+      "createdAt": "19 June 2023 · 11:42PM",
+      "modifiedAt": "20 June 2023 · 12:53PM"
     },
     {
-      "id": 2,
-      "title": "The C Programming Language",
-      "author": "Brian W. Kernighan",
-      "category": "Computer Science, Programming",
-      "isbn": "9780131103627"
+      "id": "fadc6f2a-5972-4986-a685-c2131df26438",
+      "title": "JavaScript: The Good Parts2",
+      "author": "Douglas Crockford",
+      "category": "JavaScript",
+      "isbn": "978-0596517748",
+      "isActive": true,
+      "createdAt": "19 June 2023 · 11:43PM",
+      "modifiedAt": "20 June 2023 · 12:53PM"
     },
     {
-      "id": 3,
-      "title": "The Algorithm Design Manual",
-      "author": "Steven S. Skiena",
-      "category": "Computer Science, Algorithms",
-      "isbn": "9780387948607"
+      "id": "741e9404-0bf4-4089-9754-7d305cde4b50",
+      "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+      "author": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+      "category": "Software Design",
+      "isbn": "978-0201633610",
+      "isActive": false,
+      "createdAt": "19 June 2023 · 11:43PM",
+      "modifiedAt": "19 June 2023 · 11:43PM"
+    },
+    {
+      "id": "bb8d2436-3b2d-46ee-8dc6-4d82c1905238",
+      "title": "Introduction to Algorithms",
+      "author": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
+      "category": "Algorithms",
+      "isbn": "978-0262033848",
+      "isActive": false,
+      "createdAt": "19 June 2023 · 11:44PM",
+      "modifiedAt": "19 June 2023 · 11:44PM"
+    },
+    {
+      "id": "81df544a-c005-4be5-8c3b-404ba80be193",
+      "title": "new book",
+      "author": "authior name",
+      "category": "Algorithms",
+      "isbn": "1234567890",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 11:49AM",
+      "modifiedAt": "20 June 2023 · 11:49AM"
+    },
+    {
+      "id": "c5a25e2e-36b8-4a38-a402-85dd324750b0",
+      "title": "new book",
+      "author": "authior name",
+      "category": "Algorithms",
+      "isbn": "1234567890",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 11:49AM",
+      "modifiedAt": "20 June 2023 · 11:49AM"
+    },
+    {
+      "id": "a959ed8c-50c2-4123-a2d0-aff84469809d",
+      "title": "new book",
+      "author": "authior name",
+      "category": "Algorithms",
+      "isbn": "1234567890",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 11:50AM",
+      "modifiedAt": "20 June 2023 · 11:50AM"
+    },
+    {
+      "id": "f142a157-8269-4d35-9e6c-032549d3b161",
+      "title": "asdfsfd",
+      "author": "sfdfsdf",
+      "category": "sdfasdafd",
+      "isbn": "sadfdsadf",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 11:50AM",
+      "modifiedAt": "20 June 2023 · 11:50AM"
+    },
+    {
+      "id": "401c99ce-1196-41ec-98a2-00d865094e48",
+      "title": "asdfsfd",
+      "author": "sfdfsdf",
+      "category": "sdfasdafd",
+      "isbn": "sadfdsadf",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 11:51AM",
+      "modifiedAt": "20 June 2023 · 11:51AM"
+    },
+    {
+      "id": "7a773567-6e67-424e-a8bb-81345ccc8592",
+      "title": "asdfasf",
+      "author": "asdfasdf",
+      "category": "asdfasdf",
+      "isbn": "asdfasdf",
+      "isActive": true,
+      "createdAt": "20 June 2023 · 12:01PM",
+      "modifiedAt": "20 June 2023 · 12:01PM"
     }
   ]
 }
