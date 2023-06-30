@@ -4,8 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast";
-import { SessionProvider } from "next-auth/react";
-import { Session } from "next-auth";
 
 const fivo = localFont({
   src: [
@@ -27,18 +25,16 @@ const queryClient = new QueryClient();
 
 export default function App({
   Component,
-  pageProps: { session, ...pageProps },
-}: AppProps<{ session: Session }>) {
+  pageProps: { ...pageProps },
+}: AppProps) {
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <main className={`${fivo.variable} font-sans`}>
-          <Layout>
-            <Toaster position="bottom-center" />
-            <Component {...pageProps} />
-          </Layout>
-        </main>
-      </QueryClientProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <main className={`${fivo.variable} font-sans`}>
+        <Layout>
+          <Toaster position="bottom-center" />
+          <Component {...pageProps} />
+        </Layout>
+      </main>
+    </QueryClientProvider>
   );
 }
