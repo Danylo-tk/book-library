@@ -1,7 +1,11 @@
 import { Button } from "@/components/Button";
+import { auth, signInWithGoogle } from "@/firebase/firebase";
 import Link from "next/link";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export function Header() {
+  const [user] = useAuthState(auth);
+
   return (
     <nav className="flex items-center justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black py-5 ">
       <span className="text-3xl">📚</span>
@@ -32,13 +36,19 @@ export function Header() {
           </Link>
         </li>
         <li>
-          <a
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <Button>Sign In</Button>
-          </a>
+          {user ? (
+            <a onClick={() => auth.signOut()}>
+              <Button>Sign Out</Button>
+            </a>
+          ) : (
+            <a
+              onClick={() => {
+                signInWithGoogle();
+              }}
+            >
+              <Button>Sign In</Button>
+            </a>
+          )}
         </li>
       </ul>
     </nav>
