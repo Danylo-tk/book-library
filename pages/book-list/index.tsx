@@ -5,6 +5,17 @@ import { BookItem } from "./components/BookItem";
 import { getBooks } from "@/util/apiHandlers";
 import { useQuery } from "@tanstack/react-query";
 
+type BookParams = {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  isbn: string;
+  createdAt: string;
+  modifiedAt: string;
+  isActive: boolean;
+};
+
 export default function Home() {
   const [activeFilter, setActiveFilter] = useState("allFilter");
   const { data } = useQuery({ queryKey: ["books"], queryFn: getBooks });

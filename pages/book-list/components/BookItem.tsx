@@ -1,9 +1,19 @@
+import Link from "next/link";
 import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleActivation, handleDelete } from "@/util/apiHandlers";
 
-import Link from "next/link";
+type BookParams = {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  isbn: string;
+  createdAt: string;
+  modifiedAt: string;
+  isActive: boolean;
+};
 
 export const BookItem = ({ bookData }: { bookData: BookParams }) => {
   const client = useQueryClient();
