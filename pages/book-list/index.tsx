@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/Button";
-import BookItem from "./components/BookItem";
+import BookItem from "../../components/BookItem";
 import { getBooks } from "@/util/apiHandlers";
 import { useQuery } from "@tanstack/react-query";
 
