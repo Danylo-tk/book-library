@@ -1,9 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { firebaseConfigSecrets } from "./firebase.config";
 
-//importing secret configuration data(apiKey, authDomain, projectId...)
-const firebaseConfig = firebaseConfigSecrets;
+export const firebaseConfig = {
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
+  measurementId: process.env.measurementId,
+};
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
