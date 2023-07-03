@@ -1,14 +1,27 @@
-import { Button } from "@/components/Button";
-import { auth, signInWithGoogle } from "@/firebase/firebase";
-import { User } from "firebase/auth";
+import { initFirebase } from "@/firebase/firebase";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export function Header() {
-  const [user, setUser] = useState<User | null>(null);
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => setUser(user));
-  }, []);
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  const [user, loading] = useAuthState(auth);
+  const router = useRouter();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (user) {
+    router.push("/book-list");
+  }
+
+  const signIn = async () => {
+    const result = await signInWithPopup(auth, provider);
+    console.log(result.user);
+  };
 
   return (
     <nav className="flex items-center justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black py-5 ">
@@ -38,6 +51,9 @@ export function Header() {
           >
             Add
           </Link>
+        </li>
+        <li>
+          <a onClick={signIn}>Sign in</a>
         </li>
       </ul>
     </nav>

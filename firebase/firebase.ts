@@ -17,9 +17,13 @@ export const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+
+export const initFirebase = () => {
+  return app;
+};
+/* export const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
 export const signInWithGoogle = () => signInWithRedirect(auth, provider);
-export default app;
+export default app; */
