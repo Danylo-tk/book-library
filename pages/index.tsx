@@ -1,10 +1,14 @@
 import { Button } from "@/components/Button";
 import { auth, signInWithGoogle } from "@/firebase/firebase";
+import { User } from "firebase/auth";
 import Link from "next/link";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
 
 export function Header() {
-  const [user] = useAuthState(auth);
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => setUser(user));
+  }, []);
 
   return (
     <nav className="flex items-center justify-between border-b border-l-0 border-r-0 border-t-0 border-solid border-black py-5 ">
