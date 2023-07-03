@@ -39,21 +39,6 @@ export function Header() {
             Add
           </Link>
         </li>
-        <li>
-          {user ? (
-            <a onClick={() => auth.signOut()}>
-              <Button>Sign Out</Button>
-            </a>
-          ) : (
-            <a
-              onClick={() => {
-                signInWithGoogle();
-              }}
-            >
-              <Button>Sign In</Button>
-            </a>
-          )}
-        </li>
       </ul>
     </nav>
   );
