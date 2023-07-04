@@ -48,10 +48,9 @@ export default function Home() {
 
             const documents = setBooks(
               querySnapshot.docs.map((doc) => {
-                console.log(doc.id);
+                /*   console.log(doc.id); */
 
                 return { id: doc.id, ...doc.data() } as BookParams;
-                /* return { ...(doc.data() as BookParams) }; */
               })
             );
             return documents;

@@ -26,7 +26,7 @@ interface LogicProps {
   defaultValues: CreateBookFormModel;
   onSubmit: (
     data: CreateBookFormModel
-  ) => Promise<DocumentReference<DocumentData>>;
+  ) => Promise<void | DocumentReference<DocumentData>>;
 }
 
 const CreateBookLogic = ({ defaultValues, onSubmit }: LogicProps) => {

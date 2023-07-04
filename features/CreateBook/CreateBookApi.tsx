@@ -11,8 +11,12 @@ import {
   getDoc,
   getFirestore,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { initFirebase } from "@/firebase/firebase";
 import { useEffect, useState } from "react";
@@ -46,7 +50,6 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
     if (editBookId) {
       getDocumentById(editBookId[0]).then((data) => {
         setEditBookData({ ...data } as BookParams);
-        console.log(data);
         setIsLoadingEditBookData(false);
       });
     }
@@ -63,14 +66,14 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
 
   const handleSubmit = async (data: CreateBookFormModel) => {
     const submitData = {
-      id: editBookId ? editBookId : uuidv4(),
+      /* id: editBookId ? editBookId : uuidv4(), */
       title: data.title,
       author: data.author,
       category: data.category,
       isbn: data.isbn,
       isActive: true,
       createdAt: editBookId
-        ? data.createdAt
+        ? editBookData!.createdAt
         : dayjs().format("D MMMM YYYY · h:mmA"),
       modifiedAt: dayjs().format("D MMMM YYYY · h:mmA"),
       userID: user?.uid,
@@ -86,14 +89,25 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
         body: JSON.stringify(submitData),
       }
     ); */
-
-    return addDoc(collection(db, "books"), submitData);
+    if (editBookId != undefined) {
+      console.log(data);
+      console.log(
+        "data: ",
+        data.createdAt,
+        "submitData: ",
+        submitData.createdAt
+      );
+      const bookId = editBookId!.toString();
+      const documentRef = doc(db, "books", bookId);
+      return updateDoc(documentRef, submitData);
+    } else {
+      return addDoc(collection(db, "books"), submitData);
+    }
   };
 
   // returning early if initial form data isn't loaded yet
   if (isLoadingEditBookData && editBookId) return <LoadingPage />;
 
-  console.log(editBookData?.author);
   const defaultValues = {
     title: editBookData?.title ?? "",
     author: editBookData?.author ?? "",
