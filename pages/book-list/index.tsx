@@ -2,29 +2,75 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/Button";
 import BookItem from "../../components/BookItem";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { initFirebase } from "@/firebase/firebase";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   initFirebase();
-  const db = getFirestore();
   const auth = getAuth();
-  const colRef = collection(db, "books");
   const [activeFilter, setActiveFilter] = useState("allFilter");
   const [books, setBooks] = useState<BookParams[]>([]);
+  const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    onSnapshot(colRef, (snapshot) => {
-      setBooks(
-        snapshot.docs.map((doc) => {
-          return {
-            ...(doc.data() as BookParams),
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const db = getFirestore();
+          const getDocumentsByUID = async () => {
+            const colRef = query(
+              collection(db, "books"),
+              where("userID", "==", user?.uid)
+            );
+            const querySnapshot = await getDocs(colRef);
+
+            const documents = setBooks(
+              querySnapshot.docs.map((doc) => {
+                return { ...(doc.data() as BookParams) };
+              })
+            );
+            return documents;
           };
+          console.log("auth");
+          getDocumentsByUID();
+        } else {
+          router.push("/");
+        }
+      }),
+    []
+  );
+
+  /*   useEffect(() => {
+    const db = getFirestore();
+    const getDocumentsByUID = async () => {
+      const colRef = query(
+        collection(db, "books"),
+        where("userID", "==", user?.uid)
+      );
+      const querySnapshot = await getDocs(colRef);
+
+      const documents = setBooks(
+        querySnapshot.docs.map((doc) => {
+          return { ...(doc.data() as BookParams) };
         })
       );
-    });
-  }, []);
+      return documents;
+    };
+
+    getDocumentsByUID();
+
+  }, []); */
 
   const handleFilterChange = (filterName: string) => {
     setActiveFilter(filterName);
