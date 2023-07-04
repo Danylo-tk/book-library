@@ -8,22 +8,50 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getFirestore,
   setDoc,
 } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getAuth } from "firebase/auth";
 import { initFirebase } from "@/firebase/firebase";
+import { useEffect, useState } from "react";
 
 interface CreateBookApiProps {
   editBookId?: string[] | undefined | string;
 }
+
+const getDocumentById = async (id: string) => {
+  const db = getFirestore();
+  const documentRef = doc(db, "books", id);
+  const documentSnapshot = await getDoc(documentRef);
+
+  if (documentSnapshot.exists()) {
+    const documentData = documentSnapshot.data();
+    return documentData;
+  } else {
+    throw new Error("Document not found");
+  }
+};
 
 const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
   initFirebase();
   const db = getFirestore();
   const auth = getAuth();
   const [user] = useAuthState(auth);
+  const [editBookData, setEditBookData] = useState<BookParams>();
+  const [isLoadingEditBookData, setIsLoadingEditBookData] = useState(true);
+
+  useEffect(() => {
+    if (editBookId) {
+      getDocumentById(editBookId[0]).then((data) => {
+        setEditBookData({ ...data } as BookParams);
+        console.log(data);
+        setIsLoadingEditBookData(false);
+      });
+    }
+  }, [editBookId]);
+
   /* const { data: editBookData, isLoading: isLoadingEditBookData } = useQuery(
     ["createBookData"],
     () => getBookById(editBookId),
@@ -61,15 +89,16 @@ const CreateBookApi = ({ editBookId }: CreateBookApiProps) => {
 
     return addDoc(collection(db, "books"), submitData);
   };
-  /* 
+
   // returning early if initial form data isn't loaded yet
   if (isLoadingEditBookData && editBookId) return <LoadingPage />;
- */
+
+  console.log(editBookData?.author);
   const defaultValues = {
-    title: "",
-    author: "",
-    category: "",
-    isbn: "",
+    title: editBookData?.title ?? "",
+    author: editBookData?.author ?? "",
+    category: editBookData?.category ?? "",
+    isbn: editBookData?.isbn ?? "",
   };
 
   return (

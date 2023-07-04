@@ -15,13 +15,24 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 
+type BookTypes = {
+  id: string;
+  title: string;
+  author: string;
+  category: string;
+  isbn: string;
+  createdAt: string;
+  modifiedAt: string;
+  isActive: boolean;
+  userID: string;
+};
+
 export default function Home() {
   const router = useRouter();
   initFirebase();
   const auth = getAuth();
   const [activeFilter, setActiveFilter] = useState("allFilter");
   const [books, setBooks] = useState<BookParams[]>([]);
-  const [user] = useAuthState(auth);
 
   useEffect(
     () =>
@@ -37,12 +48,15 @@ export default function Home() {
 
             const documents = setBooks(
               querySnapshot.docs.map((doc) => {
-                return { ...(doc.data() as BookParams) };
+                console.log(doc.id);
+
+                return { id: doc.id, ...doc.data() } as BookParams;
+                /* return { ...(doc.data() as BookParams) }; */
               })
             );
             return documents;
           };
-          console.log("auth");
+
           getDocumentsByUID();
         } else {
           router.push("/");
