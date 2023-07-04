@@ -7,4 +7,5 @@ type BookParams = {
   createdAt: string;
   modifiedAt: string;
   isActive: boolean;
+  userID: string;
 };
