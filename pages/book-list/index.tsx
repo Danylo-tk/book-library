@@ -28,62 +28,40 @@ type BookTypes = {
 };
 
 export default function Home() {
-  const router = useRouter();
   initFirebase();
   const auth = getAuth();
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("allFilter");
   const [books, setBooks] = useState<BookParams[]>([]);
 
-  useEffect(
-    () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const db = getFirestore();
-          const getDocumentsByUID = async () => {
-            const colRef = query(
-              collection(db, "books"),
-              where("userID", "==", user?.uid)
-            );
-            const querySnapshot = await getDocs(colRef);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const db = getFirestore();
+      const getDocumentsByUID = async () => {
+        const colRef = query(
+          collection(db, "books"),
+          where("userID", "==", user?.uid)
+        );
+        const querySnapshot = await getDocs(colRef);
 
-            const documents = setBooks(
-              querySnapshot.docs.map((doc) => {
-                /*   console.log(doc.id); */
+        const documents = setBooks(
+          querySnapshot.docs.map((doc) => {
+            /*   console.log(doc.id); */
+            return { id: doc.id, ...doc.data() } as BookParams;
+          })
+        );
+        return documents;
+      };
 
-                return { id: doc.id, ...doc.data() } as BookParams;
-              })
-            );
-            return documents;
-          };
+      getDocumentsByUID();
+    } else {
+      router.push("/");
+    }
+  });
 
-          getDocumentsByUID();
-        } else {
-          router.push("/");
-        }
-      }),
-    []
-  );
-
-  /*   useEffect(() => {
-    const db = getFirestore();
-    const getDocumentsByUID = async () => {
-      const colRef = query(
-        collection(db, "books"),
-        where("userID", "==", user?.uid)
-      );
-      const querySnapshot = await getDocs(colRef);
-
-      const documents = setBooks(
-        querySnapshot.docs.map((doc) => {
-          return { ...(doc.data() as BookParams) };
-        })
-      );
-      return documents;
-    };
-
-    getDocumentsByUID();
-
-  }, []); */
+  useEffect(() => {
+    onAuthStateChanged;
+  }, []);
 
   const handleFilterChange = (filterName: string) => {
     setActiveFilter(filterName);
