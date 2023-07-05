@@ -1,19 +1,58 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/Button";
 import BookItem from "../../components/BookItem";
-import { getBooks } from "@/util/apiHandlers";
-import { useQuery } from "@tanstack/react-query";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
+import { initFirebase } from "@/firebase/firebase";
+import { getAuth, signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  initFirebase();
+  const auth = getAuth();
+  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("allFilter");
-  const { data } = useQuery({ queryKey: ["books"], queryFn: getBooks });
+  const [books, setBooks] = useState<BookParams[]>([]);
+  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user) {
+        const db = getFirestore();
+        const userQuery = query(
+          collection(db, "books"),
+          where("userID", "==", user.uid)
+        );
+        const unsubscribe = onSnapshot(userQuery, (snapshot) => {
+          const userDocs = setBooks(
+            snapshot.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() } as BookParams;
+            })
+          );
+        });
+
+        return () => unsubscribe();
+      }
+    };
+
+    if (!loading) {
+      fetchUserData();
+    }
+  }, [user, loading]);
 
   const handleFilterChange = (filterName: string) => {
     setActiveFilter(filterName);
   };
 
-  let filteredData = data?.filter(
+  let filteredData = books?.filter(
     (book: BookParams) =>
       book.isActive ===
       (activeFilter == "allFilter"
@@ -32,6 +71,7 @@ export default function Home() {
           </button>
         </Link>
       </div>
+      <div onClick={() => signOut(auth)}>SignOut</div>
 
       <div className="w-full border-b border-l-0 border-r-0 border-t-0 border-solid border-black"></div>
       <div className="box-border flex w-full flex-col items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5 md:flex-row">
@@ -62,7 +102,7 @@ export default function Home() {
           </span>{" "}
           records out of{" "}
           <span className="font-bold text-gray-950">
-            {data?.length > 0 ? data?.length : 0}
+            {books?.length > 0 ? books?.length : 0}
           </span>
           .
         </p>

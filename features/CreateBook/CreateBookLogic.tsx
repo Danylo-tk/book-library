@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CreateBookView from "./CreateBookView";
 import { toast } from "react-hot-toast";
+import { DocumentData, DocumentReference } from "firebase/firestore";
 
 export interface CreateBookFormModel {
   title: string;
@@ -23,7 +24,9 @@ const CreateBookFormSchema = z
 
 interface LogicProps {
   defaultValues: CreateBookFormModel;
-  onSubmit: (data: CreateBookFormModel) => Promise<Response>;
+  onSubmit: (
+    data: CreateBookFormModel
+  ) => Promise<void | DocumentReference<DocumentData>>;
 }
 
 const CreateBookLogic = ({ defaultValues, onSubmit }: LogicProps) => {
