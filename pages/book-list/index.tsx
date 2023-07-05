@@ -11,21 +11,9 @@ import {
   where,
 } from "firebase/firestore";
 import { initFirebase } from "@/firebase/firebase";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-
-type BookTypes = {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  isbn: string;
-  createdAt: string;
-  modifiedAt: string;
-  isActive: boolean;
-  userID: string;
-};
 
 export default function Home() {
   initFirebase();
@@ -33,35 +21,32 @@ export default function Home() {
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState("allFilter");
   const [books, setBooks] = useState<BookParams[]>([]);
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const db = getFirestore();
-      const getDocumentsByUID = async () => {
-        const colRef = query(
-          collection(db, "books"),
-          where("userID", "==", user?.uid)
-        );
-        const querySnapshot = await getDocs(colRef);
-
-        const documents = setBooks(
-          querySnapshot.docs.map((doc) => {
-            /*   console.log(doc.id); */
-            return { id: doc.id, ...doc.data() } as BookParams;
-          })
-        );
-        return documents;
-      };
-
-      getDocumentsByUID();
-    } else {
-      router.push("/");
-    }
-  });
+  const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    onAuthStateChanged;
-  }, []);
+    const fetchUserData = async () => {
+      if (user) {
+        const db = getFirestore();
+        const userQuery = query(
+          collection(db, "books"),
+          where("userID", "==", user.uid)
+        );
+        const unsubscribe = onSnapshot(userQuery, (snapshot) => {
+          const userDocs = setBooks(
+            snapshot.docs.map((doc) => {
+              return { id: doc.id, ...doc.data() } as BookParams;
+            })
+          );
+        });
+
+        return () => unsubscribe();
+      }
+    };
+
+    if (!loading) {
+      fetchUserData();
+    }
+  }, [user, loading]);
 
   const handleFilterChange = (filterName: string) => {
     setActiveFilter(filterName);
