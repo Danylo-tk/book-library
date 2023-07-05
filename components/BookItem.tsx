@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import { Chip } from "@/components/Chip";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleActivation, handleDelete } from "@/util/apiHandlers";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getFirestore, updateDoc } from "firebase/firestore";
 
 const BookItem = ({ bookData }: { bookData: BookParams }) => {
   const db = getFirestore();
@@ -18,6 +18,11 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
     } catch (error) {
       console.error("Error updating field value:", error);
     }
+  };
+
+  const handleDelete = async (docID: string) => {
+    const documentRef = doc(db, "books", docID);
+    await deleteDoc(documentRef);
   };
 
   return (
@@ -54,7 +59,7 @@ const BookItem = ({ bookData }: { bookData: BookParams }) => {
         {!bookData.isActive ? (
           <div className="relative flex gap-5">
             <Button onClick={() => handleActivation(true)}>Activate</Button>
-            <Button onClick={() => {}}>Delete</Button>
+            <Button onClick={() => handleDelete(bookData.id)}>Delete</Button>
           </div>
         ) : (
           <div className="flex gap-5">
