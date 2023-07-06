@@ -64,7 +64,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="box-border flex w-full justify-center py-4 md:justify-start">
+      {/* <div className="box-border flex w-full justify-center py-4 md:justify-start">
         <Link href={"/book-editor"}>
           <button className="cursor-pointer border-none bg-white p-2 text-2xl hover:border-acidGreen hover:text-black  active:text-acidGreen sm:p-5 sm:text-5xl">
             Add a New Book
@@ -72,10 +72,9 @@ export default function Home() {
         </Link>
       </div>
       <div onClick={() => signOut(auth)}>SignOut</div>
-
-      <div className="w-full border-b border-l-0 border-r-0 border-t-0 border-solid border-black"></div>
-      <div className="box-border flex w-full flex-col items-center gap-2 border-b border-l-0 border-r-0 border-t-0 border-solid border-black p-5 md:flex-row">
-        <div className="flex gap-2">
+ */}
+      <div className="box-border flex w-full flex-col items-center justify-between gap-2 p-5 md:flex-row">
+        <div className="flex gap-1">
           <Button
             onClick={() => handleFilterChange("allFilter")}
             isBorderActive={activeFilter === "allFilter"}
