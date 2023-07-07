@@ -2,6 +2,7 @@ import { getAuth, signOut } from "firebase/auth";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const AccountMenuSkeleton = () => {
   return (
@@ -16,6 +17,7 @@ const AccountMenuSkeleton = () => {
 };
 
 const AccountMenu = () => {
+  const router = useRouter();
   const auth = getAuth();
   const [user, loading] = useAuthState(auth);
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +51,10 @@ const AccountMenu = () => {
         {isOpen && (
           <ul className="absolute z-20 w-full list-none border border-solid border-acidGreen bg-white">
             <li
-              onClick={() => signOut(auth)}
+              onClick={() => {
+                signOut(auth);
+                router.push("/");
+              }}
               className="cursor-pointer p-4 hover:text-acidGreen"
             >
               Log out
