@@ -1,8 +1,19 @@
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Loader } from "./Loader";
 import { useState } from "react";
+
+const AccountMenuSkeleton = () => {
+  return (
+    <div className="flex cursor-pointer items-center gap-4 p-2">
+      <div className="h-[50px] w-[50px] rounded-full bg-gray-200"></div>
+      <div className="flex flex-col gap-2">
+        <span className="h-4 w-24 bg-gray-200"></span>
+        <span className="h-4 w-40 bg-gray-200"></span>
+      </div>
+    </div>
+  );
+};
 
 const AccountMenu = () => {
   const auth = getAuth();
@@ -11,42 +22,43 @@ const AccountMenu = () => {
 
   const togleMenu = () => setIsOpen(!isOpen);
 
-  return (
-    <div className="relative">
-      <div
-        onClick={togleMenu}
-        className="flex cursor-pointer items-center gap-4 p-2 hover:bg-acidGreen"
-      >
-        {user?.photoURL != undefined && user?.photoURL != null ? (
-          <Image
-            src={user?.photoURL}
-            height={50}
-            width={50}
-            alt="User image"
-            className="rounded-full"
-          />
-        ) : (
-          <Loader />
-        )}
-        <div className="flex flex-col">
-          <span>Welcome, {user?.displayName}</span>
-          <span className="text-gray-600">{user?.email}</span>
+  if (loading) {
+    return <AccountMenuSkeleton />;
+  } else {
+    return (
+      <div className="relative h-16">
+        <div
+          onClick={togleMenu}
+          className="flex cursor-pointer items-center gap-4 p-2 hover:bg-acidGreen"
+        >
+          {user?.photoURL != undefined && user?.photoURL != null && (
+            <Image
+              src={user?.photoURL}
+              height={50}
+              width={50}
+              alt="User image"
+              className="rounded-full"
+            />
+          )}
+          <div className="flex flex-col">
+            <span>{user?.displayName}</span>
+            <span className="text-gray-600">{user?.email}</span>
+          </div>
         </div>
-      </div>
 
-      {isOpen && (
-        <div className="absolute w-full border border-solid border-acidGreen bg-white">
-          <ul className="list-none">
-            <li>menu item</li>
-            <li>menu item</li>
-            <li>menu item</li>
-            <li>menu item</li>
-            <li>menu item</li>
+        {isOpen && (
+          <ul className="absolute z-20 w-full list-none border border-solid border-acidGreen bg-white">
+            <li
+              onClick={() => signOut(auth)}
+              className="cursor-pointer p-4 hover:text-acidGreen"
+            >
+              Log out
+            </li>
           </ul>
-        </div>
-      )}
-    </div>
-  );
+        )}
+      </div>
+    );
+  }
 };
 
 export default AccountMenu;
