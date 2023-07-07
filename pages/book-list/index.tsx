@@ -14,6 +14,7 @@ import { initFirebase } from "@/firebase/firebase";
 import { getAuth, signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import AccountMenu from "@/components/AccountMenu";
 
 export default function Home() {
   initFirebase();
@@ -61,18 +62,24 @@ export default function Home() {
         ? true
         : false)
   );
-
   return (
     <main className="flex flex-col items-center">
-      {/* <div className="box-border flex w-full justify-center py-4 md:justify-start">
+      {/*       <div className="box-border flex w-full justify-center py-4 md:justify-start">
         <Link href={"/book-editor"}>
           <button className="cursor-pointer border-none bg-white p-2 text-2xl hover:border-acidGreen hover:text-black  active:text-acidGreen sm:p-5 sm:text-5xl">
-            Add a New Book
+            add book
           </button>
         </Link>
       </div>
-      <div onClick={() => signOut(auth)}>SignOut</div>
- */}
+      <div onClick={() => signOut(auth)}>SignOut</div> */}
+
+      <div className="box-border flex w-full items-center justify-between p-5">
+        <AccountMenu />
+        <Link href={"/book-editor"}>
+          <Button>Add Book</Button>
+        </Link>
+      </div>
+
       <div className="box-border flex w-full flex-col items-center justify-between gap-2 p-5 md:flex-row">
         <div className="flex gap-1">
           <Button
