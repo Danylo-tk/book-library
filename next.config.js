@@ -10,6 +10,16 @@ const nextConfig = {
     appId: process.env.FIREBASE_APP_ID,
     measurementId: process.env.FIREBASE_MEASURMENT_ID,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/a/**",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
